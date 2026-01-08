@@ -53,7 +53,7 @@ export async function updateStudent(id, payload) {
     return res.json();
 }
 
-// --- Schedule endpoints (assign / finish) ---
+// --Sếp lớp ---
 export async function assignSchedule(payload) {
     const res = await fetch(`${API_BASE}/api/schedules/assign`, {
         method: "POST",

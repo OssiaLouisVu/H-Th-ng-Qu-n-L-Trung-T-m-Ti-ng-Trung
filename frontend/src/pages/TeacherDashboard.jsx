@@ -58,14 +58,16 @@ export default function TeacherDashboard() {
     color: "#374151",
     fontSize: "14px",
   };
-// Bước 1: Log ngay khi nhận dữ liệu từ API
+// Bước 1: Log ngay. khi nhận dữ liệu từ API
 useEffect(() => {
     const u = stored.username;
-    fetch(`http://localhost:8080/api/teacher/${u}/teaching-schedule`)
+    const instructorId = u.startsWith("gv") ? u.slice(2) : u;
+fetch(`http://localhost:8080/api/instructors/${instructorId}/schedule`)
+
       .then((res) => res.json())
       .then((data) => {
         console.log("Dữ liệu từ API trả về:", data); // <--- THÊM DÒNG NÀY
-        setTeachingSchedule(data.schedule || []);
+        setTeachingSchedule(data.schedules || []);
       })
       .catch((err) => console.error(err));
 }, []);
@@ -77,21 +79,22 @@ console.log("Dữ liệu chuẩn bị vẽ lên màn hình:", teachingSchedule);
   // Load lịch giảng dạy
  
   // BỔ SUNG: Load danh sách lớp 3 nhóm
-  useEffect(() => {
-    const u = stored.username; 
-    
-    Promise.all([
-      fetch(`http://localhost:8080/api/teacher/classes/upcoming?username=${u}`).then(res => res.json()),
-      fetch(`http://localhost:8080/api/teacher/classes/ongoing?username=${u}`).then(res => res.json()),
-      fetch(`http://localhost:8080/api/teacher/classes/finished?username=${u}`).then(res => res.json())
-    ])
-    .then(([upcomingData, ongoingData, finishedData]) => {
-      setUpcoming(upcomingData.data || []);
-      setOngoing(ongoingData.data || []);
-      setFinished(finishedData.data || []);
+ // BỔ SUNG: Load danh sách lớp
+useEffect(() => {
+  const u = stored.username;
+  const instructorId = u.startsWith("gv") ? u.slice(2) : u;
+
+  fetch(`http://localhost:8080/api/instructors/${instructorId}/classes`)
+    .then(res => res.json())
+    .then(data => {
+      console.log("Danh sách lớp:", data);
+      setUpcoming(data.classes || []);
+      setOngoing([]);
+      setFinished([]);
     })
-    .catch((err) => console.error("Lỗi tải danh sách lớp:", err));
-  }, []);
+    .catch(err => console.error("Lỗi tải danh sách lớp:", err));
+}, []);
+
 
   // Hàm load chi tiết buổi học
   const loadDetail = (id) => {
@@ -403,14 +406,17 @@ const groupedSchedule = validSchedule.reduce((groups, item) => {
                 const isItemToday = item.date && new Date(item.date).toISOString().slice(0, 10) === todayStr;
                 return (
                   <tr key={item.id} style={{ borderBottom: "1px solid #f1f5f9", backgroundColor: isItemToday ? "#fff1f2" : "transparent" }}>
-                    <td style={{ padding: "16px 20px" }}>
-                      {item.date ? new Date(item.date).toLocaleDateString("vi-VN") : "---"}
-                      {isItemToday && " (Hôm nay)"}
-                    </td>
-                    <td style={{ padding: "16px 20px" }}>
-                      {/* Sửa lại theo đúng tên cột Backend: time_start và time_end */}
-                      {item.time_start && item.time_end ? `${item.time_start} - ${item.time_end}` : "Chưa xếp"}
-                    </td>
+                   <td style={{ padding: "16px 20px" }}>
+  {item.scheduled_at
+    ? new Date(item.scheduled_at).toLocaleDateString("vi-VN")
+    : "---"}
+</td>
+<td style={{ padding: "16px 20px" }}>
+  {item.start_time && item.end_time
+    ? `${item.start_time} - ${item.end_time}`
+    : "Chưa xếp"}
+</td>
+
                     <td style={{ padding: "16px 20px" }}>
                       <span style={{ background: "#f1f5f9", padding: "4px 8px", borderRadius: "4px", fontSize: "13px", fontWeight: 600 }}>
                         {item.room || "P---"}

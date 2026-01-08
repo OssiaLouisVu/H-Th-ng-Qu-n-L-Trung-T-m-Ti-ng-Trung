@@ -53,7 +53,10 @@ router.get('/', async(req, res) => {
 // 2. Cập nhật router.post
 // ... (giữ nguyên phần đầu file)
 
+// backend/routes/instructorRoutes.js
+
 router.post('/', async(req, res) => {
+    // 1. Lấy dữ liệu từ frontend
     const {
         full_name,
         type,
@@ -70,7 +73,7 @@ router.post('/', async(req, res) => {
     await connection.beginTransaction();
 
     try {
-        // 1. Chèn vào bảng instructors - PHẢI GHI RÕ CÁC CỘT
+        // 2. Chèn vào bảng INSTRUCTORS
         const [insResult] = await connection.query(
             `INSERT INTO instructors 
             (full_name, type, phone, email, specialization, hourly_rate, bank_account, bank_name, bio, status) 
@@ -79,11 +82,15 @@ router.post('/', async(req, res) => {
 
         const newInstructorId = insResult.insertId;
 
-        // 2. Tự động tạo tài khoản (Username: gv + id)
-        const username = `gv${newInstructorId}`;
+        // 3. Xử lý tạo tài khoản User (Đã sửa: Quay lại dùng gv + ID)
+        // -----------------------------------------------------------
+        const username = `gv${newInstructorId}`; // Ví dụ: gv4, gv5...
+        // -----------------------------------------------------------
+
         const defaultPassword = '123456';
         const hashedPassword = await bcrypt.hash(defaultPassword, 10);
 
+        // Chèn vào bảng USERS
         await connection.query(
             `INSERT INTO users (username, password, role, instructor_id, active) 
             VALUES (?, ?, 'INSTRUCTOR', ?, 1)`, [username, hashedPassword, newInstructorId]
@@ -91,13 +98,17 @@ router.post('/', async(req, res) => {
 
         await connection.commit();
 
-        // 3. Gửi Email thông báo (Nên dùng try-catch riêng để nếu lỗi mail thì database vẫn được lưu)
+        // 4. Gửi Email thông báo
         try {
             await transporter.sendMail({
                 from: `"Trung tâm Tiếng Anh" <${process.env.MAIL_USER}>`,
                 to: email,
-                subject: '🔑 Tài khoản Giảng viên mới của bạn',
-                html: `<p>Chào ${full_name}, tài khoản của bạn là: <b>${username}</b>, mật khẩu: <b>123456</b></p>`
+                subject: '🔑 Tài khoản Giảng viên mới',
+                // Đã sửa nội dung hiển thị đúng username là gv...
+                html: `<p>Chào ${full_name},<br>
+                       Tài khoản đăng nhập của bạn đã được tạo:<br>
+                       - Tên đăng nhập: <b>${username}</b><br>
+                       - Mật khẩu: <b>123456</b></p>`
             });
         } catch (mailErr) {
             console.error("Lỗi gửi mail:", mailErr.message);
@@ -113,7 +124,6 @@ router.post('/', async(req, res) => {
         connection.release();
     }
 });
-
 // ... (các phần còn lại giữ nguyên)
 // ==========================================
 // 3. PUT /api/instructors/:id
@@ -169,6 +179,7 @@ router.get('/:id/schedule', async(req, res) => {
         const [rows] = await db.query(`
             SELECT
                 cs.id AS schedule_id,
+                 c.id AS class_id, 
                 c.name AS class_name,
                 cs.scheduled_at,
                 JSON_UNQUOTE(JSON_EXTRACT(cs.meta, '$.room')) AS room,

@@ -329,7 +329,8 @@
  // 3) THI THỬ HỌC VIÊN (ca thi, đăng ký, kết quả)
  // ======================================================
 
-
+ const authRoutes = require("./routes/authRoutes");
+ app.use('/api/auth', authRoutes);
 
 
 
@@ -367,29 +368,7 @@
  // Router quản lý học phí (hoá đơn, thanh toán)
  app.use('/api/fee', feeRoutes);
 
- // Router xác thực (forgot password, reset password)
- const authRoutes = require("./routes/authRoutes");
- app.use('/api/auth', authRoutes);
 
- // ======================================================
- // 4) GIÁO VIÊN – DANH SÁCH LỚP (DEMO FIXED DATA)
- // ======================================================
-
- // ======================================================
- // 4) GIÁO VIÊN – DANH SÁCH LỚP (LẤY TỪ CSDL THẬT)
- //    Dựa trên logic start_date và end_date trong bảng classes.
- // ======================================================
-
- // ======================================================
- // 4) GIÁO VIÊN – DANH SÁCH LỚP (LẤY TỪ CSDL THẬT) - FIX LỖI SQL VÀ LOGIC
- // ======================================================
-
- // ======================================================
- // 4) GIÁO VIÊN – DANH SÁCH LỚP (LẤY TỪ CSDL THẬT) - SỬA LỖI ĐỊNH DẠNG NGÀY VÀ CHUYỂN CỘT
- // ======================================================
-
- // ======================================================
- // HÀM LẤY DANH SÁCH LỚP THEO TRẠNG THÁI (Đã sửa lỗi hiển thị)
  // ======================================================
  const getClassListByStatus = async(req, res, status) => {
      const u = req.params.username || req.query.username;

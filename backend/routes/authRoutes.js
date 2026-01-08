@@ -12,6 +12,8 @@ const transporter = nodemailer.createTransport({
         pass: process.env.MAIL_PASS
     }
 });
+// backend/routes/auth.js
+
 
 router.post("/forgot-password", async(req, res) => {
     const { email, role } = req.body || {};
@@ -106,4 +108,4 @@ router.post("/reset-password", async(req, res) => {
     }
 });
 
-module.exports = router; 
+module.exports = router;

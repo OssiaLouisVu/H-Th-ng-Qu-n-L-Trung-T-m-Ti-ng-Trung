@@ -21,7 +21,7 @@ SET @@SESSION.SQL_LOG_BIN= 0;
 -- GTID state at the beginning of the backup 
 --
 
-SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '0eeaf514-c72f-11f0-9710-96a36d3ada97:1-2550';
+SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '0eeaf514-c72f-11f0-9710-96a36d3ada97:1-2619';
 
 --
 -- Table structure for table `attendance`
@@ -68,7 +68,7 @@ CREATE TABLE `bank_info` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -77,7 +77,6 @@ CREATE TABLE `bank_info` (
 
 LOCK TABLES `bank_info` WRITE;
 /*!40000 ALTER TABLE `bank_info` DISABLE KEYS */;
-INSERT INTO `bank_info` VALUES (1,'MB Bank','038204019305','English Center',NULL,1,'2025-12-06 18:14:23','2025-12-06 18:14:23');
 /*!40000 ALTER TABLE `bank_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -98,7 +97,7 @@ CREATE TABLE `class_schedules` (
   PRIMARY KEY (`id`),
   KEY `fk_csched_class` (`class_id`),
   CONSTRAINT `fk_csched_class` FOREIGN KEY (`class_id`) REFERENCES `classes` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=412 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -107,7 +106,6 @@ CREATE TABLE `class_schedules` (
 
 LOCK TABLES `class_schedules` WRITE;
 /*!40000 ALTER TABLE `class_schedules` DISABLE KEYS */;
-INSERT INTO `class_schedules` VALUES (407,60,NULL,'2026-01-19 02:00:00','{\"end\": \"11:00\", \"room\": \"P101\", \"start\": \"09:00\"}','2025-12-24 13:41:10'),(408,60,NULL,'2026-02-18 02:00:00','{\"end\": \"11:00\", \"room\": \"P101\", \"start\": \"09:00\"}','2025-12-24 13:41:10'),(409,60,NULL,'2026-03-19 02:00:00','{\"end\": \"11:00\", \"room\": \"P101\", \"start\": \"09:00\"}','2025-12-24 13:41:10'),(410,60,NULL,'2026-04-19 02:00:00','{\"end\": \"11:00\", \"room\": \"P101\", \"start\": \"09:00\"}','2025-12-24 13:41:10'),(411,60,NULL,'2026-05-19 02:00:00','{\"end\": \"11:00\", \"room\": \"P101\", \"start\": \"09:00\"}','2025-12-24 13:41:10');
 /*!40000 ALTER TABLE `class_schedules` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -133,7 +131,7 @@ CREATE TABLE `class_sessions` (
   PRIMARY KEY (`id`),
   KEY `fk_cs_class_sessions_class` (`class_id`),
   CONSTRAINT `fk_cs_class_sessions_class` FOREIGN KEY (`class_id`) REFERENCES `classes` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=1509 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -142,7 +140,6 @@ CREATE TABLE `class_sessions` (
 
 LOCK TABLES `class_sessions` WRITE;
 /*!40000 ALTER TABLE `class_sessions` DISABLE KEYS */;
-INSERT INTO `class_sessions` VALUES (1492,60,'2026-01-19','09:00:00','11:00:00','P101',NULL,'SCHEDULED',NULL,'2025-12-24 15:48:38','2025-12-24 15:48:38'),(1493,60,'2026-02-18','09:00:00','11:00:00','P101',NULL,'SCHEDULED',NULL,'2025-12-24 15:48:38','2025-12-24 15:48:38'),(1494,60,'2026-03-19','09:00:00','11:00:00','P101',NULL,'SCHEDULED',NULL,'2025-12-24 15:48:38','2025-12-24 15:48:38'),(1495,60,'2026-04-19','09:00:00','11:00:00','P101',NULL,'SCHEDULED',NULL,'2025-12-24 15:48:38','2025-12-24 15:48:38'),(1496,60,'2026-05-19','09:00:00','11:00:00','P101',NULL,'SCHEDULED',NULL,'2025-12-24 15:48:38','2025-12-24 15:48:38'),(1504,62,'2026-01-20','09:00:00','11:00:00','P101',NULL,'SCHEDULED',NULL,'2025-12-24 15:56:47','2025-12-24 15:56:47'),(1505,62,'2026-01-21','09:00:00','11:00:00','P101',NULL,'SCHEDULED',NULL,'2025-12-24 15:56:47','2025-12-24 15:56:47'),(1506,62,'2026-01-22','09:00:00','11:00:00','P101',NULL,'SCHEDULED',NULL,'2025-12-24 15:56:47','2025-12-24 15:56:47'),(1507,62,'2026-01-23','09:00:00','11:00:00','P101',NULL,'SCHEDULED',NULL,'2025-12-24 15:56:47','2025-12-24 15:56:47'),(1508,62,'2026-01-24','09:00:00','11:00:00','P101',NULL,'SCHEDULED',NULL,'2025-12-24 15:56:47','2025-12-24 15:56:47');
 /*!40000 ALTER TABLE `class_sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -167,7 +164,7 @@ CREATE TABLE `class_students` (
   KEY `fk_cs_student` (`student_id`),
   CONSTRAINT `fk_cs_class` FOREIGN KEY (`class_id`) REFERENCES `classes` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_cs_student` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -176,7 +173,6 @@ CREATE TABLE `class_students` (
 
 LOCK TABLES `class_students` WRITE;
 /*!40000 ALTER TABLE `class_students` DISABLE KEYS */;
-INSERT INTO `class_students` VALUES (60,60,100,'2025-12-24 15:21:14',NULL,'ACTIVE','2025-12-24 15:21:14','2025-12-24 15:21:14');
 /*!40000 ALTER TABLE `class_students` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -196,7 +192,7 @@ CREATE TABLE `class_teachers` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `ux_class_teacher` (`class_id`,`teacher_id`),
   CONSTRAINT `fk_ct_class` FOREIGN KEY (`class_id`) REFERENCES `classes` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -205,7 +201,6 @@ CREATE TABLE `class_teachers` (
 
 LOCK TABLES `class_teachers` WRITE;
 /*!40000 ALTER TABLE `class_teachers` DISABLE KEYS */;
-INSERT INTO `class_teachers` VALUES (18,60,26,'MAIN','2025-12-24 13:41:10'),(24,62,26,'MAIN','2025-12-24 15:56:47');
 /*!40000 ALTER TABLE `class_teachers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -259,7 +254,7 @@ CREATE TABLE `course_history` (
   `changed_by` int DEFAULT NULL,
   `changed_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -268,7 +263,6 @@ CREATE TABLE `course_history` (
 
 LOCK TABLES `course_history` WRITE;
 /*!40000 ALTER TABLE `course_history` DISABLE KEYS */;
-INSERT INTO `course_history` VALUES (1,10,'CREATE',NULL,NULL,NULL,NULL,1,'2025-12-05 15:48:37'),(2,10,'UPDATE','status','ACTIVE','ARCHIVED','Kết thúc khóa học',1,'2025-12-05 15:48:59'),(3,3,'UPDATE','status','ACTIVE','ARCHIVED','Kết thúc khóa học',1,'2025-12-05 15:56:43'),(4,4,'UPDATE','status','ACTIVE','ARCHIVED','Kết thúc khóa học',1,'2025-12-05 16:17:40'),(5,5,'UPDATE','status','ACTIVE','ARCHIVED',NULL,1,'2025-12-05 16:19:53'),(6,4,'UPDATE','tuition_fee','5000000.00','5000000','Cập nhật thông tin khóa học',1,'2025-12-05 16:22:11'),(7,6,'UPDATE','status','ACTIVE','ARCHIVED','Kết thúc khóa học',1,'2025-12-05 16:23:58'),(8,4,'UPDATE','status','ARCHIVED','ACTIVE','Chuyển trạng thái',1,'2025-12-05 16:39:56'),(9,5,'UPDATE','status','ARCHIVED','ACTIVE','Chuyển trạng thái',1,'2025-12-05 18:19:50'),(10,4,'UPDATE','status','ACTIVE','ARCHIVED','Kết thúc khóa học',1,'2025-12-06 06:37:31'),(11,4,'UPDATE',NULL,NULL,NULL,NULL,1,'2025-12-06 06:37:40'),(12,5,'UPDATE','status','ACTIVE','ARCHIVED','Kết thúc khóa học',1,'2025-12-06 07:25:50'),(13,4,'UPDATE','status','ARCHIVED','ACTIVE','Chuyển trạng thái',1,'2025-12-06 07:33:15'),(14,4,'UPDATE','status','ACTIVE','ARCHIVED','Kết thúc khóa học',1,'2025-12-06 18:22:33'),(15,1,'UPDATE','status','ACTIVE','ARCHIVED','Kết thúc khóa học',1,'2025-12-06 18:22:40'),(16,4,'UPDATE','status','ARCHIVED','ACTIVE','Chuyển trạng thái',1,'2025-12-06 18:24:58'),(17,5,'UPDATE','status','ARCHIVED','ACTIVE','Chuyển trạng thái',1,'2025-12-09 08:06:34'),(18,4,'UPDATE',NULL,NULL,NULL,NULL,1,'2025-12-10 10:55:45'),(19,4,'UPDATE',NULL,NULL,NULL,NULL,1,'2025-12-10 17:50:43'),(20,5,'UPDATE',NULL,NULL,NULL,NULL,1,'2025-12-10 17:51:22'),(21,4,'UPDATE',NULL,NULL,NULL,NULL,1,'2025-12-10 17:51:34'),(22,5,'UPDATE',NULL,NULL,NULL,NULL,1,'2025-12-10 17:51:43'),(23,6,'UPDATE',NULL,NULL,NULL,NULL,1,'2025-12-10 17:53:37');
 /*!40000 ALTER TABLE `course_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -426,7 +420,7 @@ CREATE TABLE `employees` (
   KEY `fk_employees_user_id` (`user_id`),
   KEY `idx_employee_code` (`employee_code`),
   CONSTRAINT `fk_employees_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -435,7 +429,6 @@ CREATE TABLE `employees` (
 
 LOCK TABLES `employees` WRITE;
 /*!40000 ALTER TABLE `employees` DISABLE KEYS */;
-INSERT INTO `employees` VALUES (26,'NV0001','Trần Tấn Hoàng',NULL,'Nam','0348419996','djjgkt1901@icloud.com','Thanh Hoá','STAFF',1,'2025-12-23 08:17:41','2025-12-24 18:32:14',56),(27,'NV0002','Vũ Thịnh',NULL,'Nam','0348419996','thinh.vd227154@sis.hust.edu.vn','Thanh Hoá','ACCOUNTANT',1,'2025-12-23 08:17:58','2025-12-24 18:32:34',55);
 /*!40000 ALTER TABLE `employees` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -462,7 +455,7 @@ CREATE TABLE `instructor_class_history` (
   PRIMARY KEY (`id`),
   KEY `idx_instructor_class_history_instructor_id` (`instructor_id`),
   CONSTRAINT `instructor_class_history_ibfk_1` FOREIGN KEY (`instructor_id`) REFERENCES `instructors` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -471,7 +464,6 @@ CREATE TABLE `instructor_class_history` (
 
 LOCK TABLES `instructor_class_history` WRITE;
 /*!40000 ALTER TABLE `instructor_class_history` DISABLE KEYS */;
-INSERT INTO `instructor_class_history` VALUES (1,6,18,'MAIN',NULL,NULL,0,0.00,0.00,NULL,NULL,'2025-12-08 09:08:14'),(2,7,21,'MAIN',NULL,NULL,0,0.00,0.00,NULL,NULL,'2025-12-09 15:33:09'),(3,7,22,'MAIN',NULL,NULL,0,0.00,0.00,NULL,NULL,'2025-12-10 06:54:14'),(4,6,22,'MAIN',NULL,NULL,0,0.00,0.00,NULL,NULL,'2025-12-10 10:37:14');
 /*!40000 ALTER TABLE `instructor_class_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -581,7 +573,7 @@ CREATE TABLE `invoices` (
   KEY `idx_invoices_paid_at` (`paid_at`),
   CONSTRAINT `invoices_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE,
   CONSTRAINT `invoices_ibfk_2` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -590,7 +582,6 @@ CREATE TABLE `invoices` (
 
 LOCK TABLES `invoices` WRITE;
 /*!40000 ALTER TABLE `invoices` DISABLE KEYS */;
-INSERT INTO `invoices` VALUES (17,100,4,3000000.00,'PAID',NULL,NULL,'2025-12-24 15:05:34','2025-12-24 15:19:04','2025-12-24 15:19:04');
 /*!40000 ALTER TABLE `invoices` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -610,7 +601,7 @@ CREATE TABLE `mock_exam_registrations` (
   PRIMARY KEY (`id`),
   KEY `shift_id` (`shift_id`),
   CONSTRAINT `mock_exam_registrations_ibfk_1` FOREIGN KEY (`shift_id`) REFERENCES `mock_exam_shifts` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -619,7 +610,6 @@ CREATE TABLE `mock_exam_registrations` (
 
 LOCK TABLES `mock_exam_registrations` WRITE;
 /*!40000 ALTER TABLE `mock_exam_registrations` DISABLE KEYS */;
-INSERT INTO `mock_exam_registrations` VALUES (8,'student99',1,'2025-11-30','REGISTERED'),(9,'student1',1,'2025-12-09','REGISTERED');
 /*!40000 ALTER TABLE `mock_exam_registrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -639,7 +629,7 @@ CREATE TABLE `mock_exam_result_sections` (
   PRIMARY KEY (`id`),
   KEY `result_id` (`result_id`),
   CONSTRAINT `mock_exam_result_sections_ibfk_1` FOREIGN KEY (`result_id`) REFERENCES `mock_exam_results` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -648,7 +638,6 @@ CREATE TABLE `mock_exam_result_sections` (
 
 LOCK TABLES `mock_exam_result_sections` WRITE;
 /*!40000 ALTER TABLE `mock_exam_result_sections` DISABLE KEYS */;
-INSERT INTO `mock_exam_result_sections` VALUES (1,1,'Nghe',80,100),(2,1,'Đọc',70,100),(3,1,'Viết',35,50);
 /*!40000 ALTER TABLE `mock_exam_result_sections` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -667,7 +656,7 @@ CREATE TABLE `mock_exam_results` (
   `score` int NOT NULL,
   `feedback` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -676,7 +665,6 @@ CREATE TABLE `mock_exam_results` (
 
 LOCK TABLES `mock_exam_results` WRITE;
 /*!40000 ALTER TABLE `mock_exam_results` DISABLE KEYS */;
-INSERT INTO `mock_exam_results` VALUES (1,'student1','HSK2 Mock Test 00','2025-06-01',185,'Nghe tốt, cần cải thiện phần viết.');
 /*!40000 ALTER TABLE `mock_exam_results` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -696,7 +684,7 @@ CREATE TABLE `mock_exam_shifts` (
   `room` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `level` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -705,7 +693,6 @@ CREATE TABLE `mock_exam_shifts` (
 
 LOCK TABLES `mock_exam_shifts` WRITE;
 /*!40000 ALTER TABLE `mock_exam_shifts` DISABLE KEYS */;
-INSERT INTO `mock_exam_shifts` VALUES (1,'HSK2.1 Mock Test 01','2026-01-10','18:00:00','19:30:00','P201','HSK3'),(2,'HSK 2.2Mock Test 02','2026-02-17','18:00:00','19:30:00','P202','HSK3');
 /*!40000 ALTER TABLE `mock_exam_shifts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -728,7 +715,7 @@ CREATE TABLE `password_reset_tokens` (
   KEY `idx_user_id` (`user_id`),
   KEY `idx_expires_at` (`expires_at`),
   CONSTRAINT `password_reset_tokens_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -737,7 +724,6 @@ CREATE TABLE `password_reset_tokens` (
 
 LOCK TABLES `password_reset_tokens` WRITE;
 /*!40000 ALTER TABLE `password_reset_tokens` DISABLE KEYS */;
-INSERT INTO `password_reset_tokens` VALUES (8,56,'1fb531a623894f31ad3ed925e019330ca9272b1e1f420fe26a7612b60bd12106','2025-12-25 02:31:19','2025-12-24 18:31:18'),(10,66,'3ce4582791a2023f341cbc7f1a4ba651c0d61d590375957f17fac801679917a3','2025-12-25 02:35:07','2025-12-24 18:35:06'),(11,58,'3a4d2a48fae61299422eeccbb21cefdbe0f26d237fb3ec70174738af42c1f16d','2025-12-25 02:55:01','2025-12-24 18:55:00'),(12,59,'ead55f002a04e50f8f95ae87221a7b21698a0057b91a129c9a6251c135833bff','2025-12-25 03:03:06','2025-12-24 19:03:05');
 /*!40000 ALTER TABLE `password_reset_tokens` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -761,7 +747,7 @@ CREATE TABLE `schedules` (
   KEY `fk_sch_student` (`student_id`),
   CONSTRAINT `fk_sch_class` FOREIGN KEY (`class_id`) REFERENCES `classes` (`id`) ON DELETE SET NULL,
   CONSTRAINT `fk_sch_student` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=485 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -792,7 +778,7 @@ CREATE TABLE `student_schedule` (
   KEY `idx_schedule_username` (`username`),
   KEY `idx_schedule_date` (`date`),
   CONSTRAINT `fk_schedule_user` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -856,7 +842,7 @@ CREATE TABLE `users` (
   UNIQUE KEY `username` (`username`),
   KEY `fk_users_student` (`student_id`),
   CONSTRAINT `fk_users_student` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -879,4 +865,4 @@ SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-12-25  3:34:13
+-- Dump completed on 2025-12-25 20:10:53
