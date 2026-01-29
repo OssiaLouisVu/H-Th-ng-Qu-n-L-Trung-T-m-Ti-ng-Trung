@@ -4,7 +4,7 @@ const db = require('../db');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
-// simple mail transporter (same env as notifyRoutes)
+
 const mailTransporter = nodemailer.createTransport({
     service: process.env.MAIL_SERVICE || 'gmail',
     auth: { user: process.env.MAIL_USER, pass: process.env.MAIL_PASS },
@@ -46,7 +46,7 @@ async function fetchFilteredEmployees({ role = 'ALL', search = '', active = 'tru
     return rows || [];
 }
 
-// GET /api/attendance?date=YYYY-MM-DD
+
 router.get('/', async(req, res) => {
     const { date } = req.query;
     if (!date) {
@@ -66,8 +66,7 @@ router.get('/', async(req, res) => {
     }
 });
 
-// POST /api/attendance - bulk upsert
-// Body: { date: 'YYYY-MM-DD', items: [{ employee_id, status, note }] }
+
 router.post('/', async(req, res) => {
     const { date, items } = req.body || {};
     if (!date || !Array.isArray(items)) {
@@ -96,7 +95,7 @@ router.post('/', async(req, res) => {
     }
 });
 
-// PUT /api/attendance/:id - update single record
+
 router.put('/:id', async(req, res) => {
     const id = req.params.id;
     const { status, note } = req.body || {};
@@ -113,9 +112,7 @@ router.put('/:id', async(req, res) => {
 
 module.exports = router;
 
-// =================== Monthly summary and notifications ===================
 
-// GET /api/attendance/monthly?month=YYYY-MM&role=...&search=...&active=true
 router.get('/monthly', async(req, res) => {
     const { month, role = 'ALL', search = '', active = 'true' } = req.query;
     if (!month || !/^\d{4}-\d{2}$/.test(month)) {
@@ -185,7 +182,7 @@ router.get('/monthly', async(req, res) => {
     }
 });
 
-// POST /api/attendance/notify/daily { date, target, role, search }
+
 router.post('/notify/daily', async(req, res) => {
     const { date, target = 'all', role = 'ALL', search = '', active = 'true' } = req.body || {};
     if (!date) return res.status(400).json({ success: false, message: 'Thiếu date (YYYY-MM-DD)' });
@@ -224,7 +221,7 @@ router.post('/notify/daily', async(req, res) => {
     }
 });
 
-// POST /api/attendance/notify/monthly { month, role, search }
+
 router.post('/notify/monthly', async(req, res) => {
     const { month, role = 'ALL', search = '', active = 'true' } = req.body || {};
     if (!month || !/^\d{4}-\d{2}$/.test(month)) return res.status(400).json({ success: false, message: 'Thiếu hoặc sai month (YYYY-MM)' });
