@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
         pass: process.env.MAIL_PASS
     }
 });
-// backend/routes/auth.js
+
 
 
 router.post("/forgot-password", async(req, res) => {
@@ -86,7 +86,7 @@ router.post("/forgot-password", async(req, res) => {
     }
 });
 
-// Reset password API (Giữ nguyên logic cập nhật bảng users)
+
 router.post("/reset-password", async(req, res) => {
     const { token, newPassword } = req.body || {};
     try {
