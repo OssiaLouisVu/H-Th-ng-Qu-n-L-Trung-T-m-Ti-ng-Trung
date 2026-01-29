@@ -3,9 +3,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db');
 
-// ======================================================
-// API 1: TẠO LỚP HỌC (5 BUỔI + GIẢNG VIÊN)
-// ======================================================
+
 router.post('/', async(req, res) => {
     const { name, teacher_id, dates, startTime, endTime, room, capacity } = req.body;
 
@@ -64,9 +62,7 @@ router.post('/', async(req, res) => {
     }
 });
 
-// ======================================================
-// API 2: GÁN HỌC VIÊN (CÓ CHECK THANH TOÁN - STRICT MODE)
-// ======================================================
+
 router.post('/:id/assign', async(req, res) => {
     const classId = req.params.id;
     // Bắt buộc phải gửi lên cả studentId VÀ courseId để check bill
@@ -125,9 +121,7 @@ router.post('/:id/assign', async(req, res) => {
     }
 });
 
-// ======================================================
-// API 3: XÓA LỚP & HOÀN TÁC TRẠNG THÁI (ROLLBACK)
-// ======================================================
+
 router.delete('/:id', async(req, res) => {
     const classId = req.params.id;
     let conn;
@@ -171,9 +165,7 @@ router.delete('/:id', async(req, res) => {
     }
 });
 
-// ======================================================
-// API 4: LẤY DANH SÁCH LỚP
-// ======================================================
+
 router.get('/', async(req, res) => {
     try {
         const [rows] = await db.query(`
@@ -191,9 +183,6 @@ router.get('/', async(req, res) => {
     }
 });
 
-// ======================================================
-// API 5: LẤY DANH SÁCH HỌC VIÊN TRONG LỚP (Để hiển thị)
-// ======================================================
 router.get('/:id/students', async(req, res) => {
     try {
         const [rows] = await db.query(`
